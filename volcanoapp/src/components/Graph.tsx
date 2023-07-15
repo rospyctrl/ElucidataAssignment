@@ -91,8 +91,8 @@ function Graph({ values }: Props) {
             shape={<RenderDot/>}
           >
             <CartesianGrid />
-            <XAxis type="number" dataKey="x" name="fold change" />
-            <YAxis type="number" dataKey="y" name="weight" />
+            <XAxis label={{ value:  'Fold Change', angle: 0, position: 'bottom' }}type="number" dataKey="x" name="fold change" />
+            <YAxis label={{ value:'-log10(P-value)', angle: -90, position: 'left' }} type="number" dataKey="y" name="weight" />
             {/* @ts-ignore */}
             <Tooltip content={<CustomTooltip />} />
             <Scatter
