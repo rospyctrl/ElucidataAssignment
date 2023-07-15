@@ -23,7 +23,7 @@ function App() {
       setLoading(true);
       // setDataArray(pointData)
       const response = await axios.get(
-        "http://127.0.0.1:8000/api/differential?limit=5000"
+        "http://127.0.0.1:8000/api/differential?limit=8000"
       );
       if (response.data.data) {
         console.log(response.data.data);
@@ -52,7 +52,7 @@ function App() {
               Click on the button below to generate the graph and table
             </Typography>
             {!loading && (
-              <Button variant="contained" onClick={generateContentHandler}>
+              <Button fullWidth={false} variant="contained" onClick={generateContentHandler}>
                 Generate
               </Button>
             )}

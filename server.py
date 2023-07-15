@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 @app.get("/api/differential/")
-async def get_data(limit: int = 20000):
+async def get_data(limit: int = 25000):
     csv_file = "./DE-results.csv" 
 
     try:

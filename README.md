@@ -20,3 +20,7 @@
     npm start
 ```
 - This will start the application on `http://localhost:3000`
+
+
+**NOTE**
+To address occasional crashes caused by a large dataset (>20,000), an API modification has been made by introducing a limit query parameter to restrict the number of datasets. In the current implementation, the limit has been set to 8000. If necessary, you can remove or modify this limit as needed in the App.js file.

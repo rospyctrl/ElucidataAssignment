@@ -8,10 +8,11 @@ import {
   Tooltip,
   ResponsiveContainer,
   ZAxis,
-  Dot
+  Dot,
 } from "recharts";
 import { DataType } from "../types/types";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getBaseLog } from "../utils/helper";
 
 type Props = {
   values: DataType[];
@@ -21,10 +22,14 @@ type scatterData = {
   y: number;
   name: string;
 };
+type DotProps = {
+  cx : number;
+  cy : number;
+}
 
-const RenderDot = ({ cx, cy } : {cx:any, cy:any}) => {
+const RenderDot: React.FC<DotProps> = ({ cx, cy }) => {
   return (
-    <Dot cx={cx} cy={cy} fill="red" r={1} />
+    <Dot cx={cx} cy={cy} r={15} />
   )
 }
 const CustomTooltip = ({
@@ -63,7 +68,7 @@ function Graph({ values }: Props) {
       return {
         name: item[""],
         x: parseFloat(item.logFC),
-        y: parseFloat(item["adj.P.Val"]),
+        y: -getBaseLog(10, parseFloat(item["adj.P.Val"])),
       };
     });
     console.log({ updatedData });
@@ -71,28 +76,36 @@ function Graph({ values }: Props) {
     setLoading(false);
   };
 
-
-
-  
-
   return (
     <div>
       {loading && <CircularProgress />}
       {!loading && (
         <ResponsiveContainer width="100%" height={500}>
           <ScatterChart
+            stackOffset="sign"
             margin={{
               top: 20,
               right: 20,
               bottom: 20,
-                left: 20,
+              left: 20,
             }}
             /* @ts-ignore */
-            shape={<RenderDot/>}
+            shape={<RenderDot />}
           >
             <CartesianGrid />
-            <XAxis label={{ value:  'Fold Change', angle: 0, position: 'bottom' }}type="number" dataKey="x" name="fold change" />
-            <YAxis label={{ value:'-log10(P-value)', angle: -90, position: 'left' }} type="number" dataKey="y" name="weight" />
+            <XAxis
+              label={{ value: "Fold Change", angle: 0, position: "bottom" }}
+              type="number"
+              dataKey="x"
+              name="fold change"
+            />
+            <YAxis
+              label={{ value: "-log10(P-value)", angle: -90, position: "left" }}
+              type="number"
+              dataKey="y"
+              name="weight"
+              interval={0}
+            />
             {/* @ts-ignore */}
             <Tooltip content={<CustomTooltip />} />
             <Scatter
